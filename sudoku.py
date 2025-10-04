@@ -3,6 +3,7 @@ import sys
 def main():
     sortedUnknowns = []
     unknown = {}
+    tempList = []
     while True:
         try:
             #get side length, until enters a valid value
@@ -21,7 +22,15 @@ def main():
         t = checkRow(startGrid, pos[0], sideL, p)
         z = checkBox(startGrid, pos, sideL, t)
         print(z)
-        sortedUnknowns.append([pos, z])
+        tempList.append({
+            "position": pos,
+            "possible": z,
+            "length": len(z)
+            })
+   
+    tempList = mergeSort(tempList)
+    print(tempList)
+    
 
 
 
@@ -81,6 +90,47 @@ def checkBox(grid, position, sideLen, possible):
                 pass
     return possible
 
+#implement mergesort to sort dictionary
+def mergeSort(unsorted):
+    if len(unsorted) <= 1:
+        return unsorted
+    mid = len(unsorted) // 2
+    rightHalf = unsorted[mid:]
+    leftHalf = unsorted[:mid]
+    print("left:", leftHalf)
+    print("right:", rightHalf)
+    
+    leftSorted = mergeSort(leftHalf)
+    rightSorted = mergeSort(rightHalf)
+    
+
+    return merge(leftSorted, rightSorted)
+
+def merge(left, right):
+    i = 0
+    j = 0
+    sorted = []
+    print(left)
+    print(right)
+    
+    while i < len(left) and j < len(right):
+        if left[i]["length"] < right[j]["length"]:
+            sorted.append(left[i])
+            print(left[i])
+            i += 1
+            print("i++")
+        else:
+            sorted.append(right[j])
+            j += 1
+            print("j++")
+    if i >= len(left):
+        sorted.extend(right[j:])
+    elif j >= len(right):
+        sorted.extend(left[i:])
+
+    return sorted
+
+
 
 main()
 
@@ -88,4 +138,4 @@ main()
 # 2 4 3 1       x 4 t 1    expected: (2, 4), (2, 3), (2, 3), (2, 3)
 # 3 1 4 2       3 1 4 d    expected: (2), (2)
 # 1 3 2 4       1 c v 4    expected: (2, 3), (3), (2, 3), (2, 3)
-# 4 2 1 3       x 2 1 3    expected: (2, 4), (4)
+# 4 2 1 3       x 2 1 y    expected: (2, 4), (4)
