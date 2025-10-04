@@ -28,8 +28,8 @@ def main():
             "length": len(z)
             })
    
-    tempList = mergeSort(tempList)
-    print(tempList)
+    sortedUnknowns = mergeSort(tempList)
+    print(sortedUnknowns)
     
 
 
@@ -119,10 +119,26 @@ def merge(left, right):
             print(left[i])
             i += 1
             print("i++")
-        else:
+        elif left[i]["length"] > right[j]["length"]:
             sorted.append(right[j])
             j += 1
             print("j++")
+        else:
+            print("else")
+            if left[i]["position"][0] > right[j]["position"][0]:
+                sorted.append(right[j])
+                j+=1
+            elif left[i]["position"][0] < right[j]["position"][0]:
+                sorted.append(left[i])
+                i+=1
+            else:
+                if left[i]["position"][1] > right[j]["position"][1]:
+                    sorted.append(right[j])
+                    j+=1
+                else:
+                    sorted.append(left[i])
+                    i+=1
+
     if i >= len(left):
         sorted.extend(right[j:])
     elif j >= len(right):
