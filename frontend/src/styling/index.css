@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.grid-edge {
+  @apply border-l border-r;
+}
+
+.grid-row {
+  @apply border-b;
+}
