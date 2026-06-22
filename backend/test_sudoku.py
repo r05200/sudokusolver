@@ -11,7 +11,7 @@ class Test4x4Grid:
             ['2', '1', 'k', 'r'],
             ['4', '3', 'm', 'n']
         ]
-        unknowns = sudoku.debug_start_grid(start_grid)
+        unknowns = sudoku.start_unknowns(start_grid)
         assert unknowns == [[2, 2], [2, 3], [3, 2], [3, 3]]
 
     def test_get_unknowns4x42(self):
@@ -21,7 +21,7 @@ class Test4x4Grid:
             ['1', 'c', 'v', '4'],
             ['x', '2', '1', 'y']
         ]
-        unknowns = sudoku.debug_start_grid(start_grid)
+        unknowns = sudoku.start_unknowns(start_grid)
         assert unknowns == [[0, 0], [0, 2], [1, 3], [2, 1], [2, 2], [3, 0], [3, 3]]
 
     def test_get_possible_4x4(self):
@@ -89,9 +89,8 @@ class Test4x4Grid:
             ['x', '1', '4', '3'],
             ['3', '4', 'k', 'r']
         ]
-        unknowns = sudoku.debug_start_grid(grid)
-        sorted_unknowns = sudoku.get_possible(unknowns, grid, self.side_l)
-        solved = sudoku.solve_sudoku(sorted_unknowns, grid)
+        
+        solved = sudoku.sudoku_solver(grid, self.side_l)
         assert solved == [
             ['1', '2', '3', '4'],
             ['4', '3', '1', '2'],
@@ -112,9 +111,8 @@ class Test4x4Grid:
             ['x', '2', '1', 'y']
         ]
         
-        unknowns = sudoku.debug_start_grid(grid)
-        sorted_unknowns = sudoku.get_possible(unknowns, grid, self.side_l)
-        assert sudoku.solve_sudoku(sorted_unknowns, grid) == [
+       
+        assert sudoku.sudoku_solver(grid, self.side_l) == [
             ['2', '4', '3', '1'],
             ['3', '1', '4', '2'],
             ['1', '3', '2', '4'],
@@ -149,7 +147,7 @@ class Test9x9Grid:
             ['2', 'l', '7', 'n', '1', 'g', 'i', '3', 'o'],
             ['l', 'e', 't', '2', 'd', '6', '1', 'n', 'q']
         ]
-        unknowns = sudoku.debug_start_grid(start_grid)
+        unknowns = sudoku.start_unknowns(start_grid)
         assert unknowns == [[0, 1], [0, 2], [0, 4], [0, 7], [1, 1], [2, 1], [2, 5], [2, 6], [2, 7], [2, 8], [3, 0], [3, 2], [3, 3], [3, 4], [3, 5], [3, 7], [3, 8], [4, 1], [4, 4], [4, 5], [5, 1], [5, 2], [5, 3], [5, 5], [5, 7], [5, 8], [6, 0], [6, 6], [6, 8], [7, 1], [7, 3], [7, 5], [7, 6], [7, 8], [8, 0], [8, 1], [8, 2], [8, 4], [8, 7], [8, 8]]
  
     
@@ -166,7 +164,7 @@ class Test9x9Grid:
             ['8', '1', '2', '6', '5', '9', '4', '3', 'k']
         ]
 
-        unknowns = sudoku.debug_start_grid(start_grid)
+        unknowns = sudoku.start_unknowns(start_grid)
         assert sudoku.get_possible(unknowns, start_grid, self.side_l) == [
                 
                 {'position': [0, 8], 'possible': [9], 'dependencies': [[0, 7], [1, 6], [1, 7], [2, 6], [2, 7], [7, 8], [8, 8]]},
@@ -196,7 +194,7 @@ class Test9x9Grid:
             ['8', '1', '2', '6', '5', '9', '4', '3', 'k']
         ]
 
-        unknowns = sudoku.debug_start_grid(start_grid)
+        unknowns = sudoku.start_unknowns(start_grid)
         assert sudoku.get_possible(unknowns, start_grid, self.side_l) == [
                 
                 {'position': [0, 8], 'possible': [9], 'dependencies': [[0, 7], [1, 6], [1, 7], [2, 6], [2, 7], [7, 8], [8, 8]]},
@@ -225,7 +223,7 @@ class Test9x9Grid:
             ['8', '1', '2', '6', '5', '9', '4', '3', 'k']
         ]
 
-        unknowns = sudoku.debug_start_grid(start_grid)
+        unknowns = sudoku.start_unknowns(start_grid)
         assert sudoku.get_possible(unknowns, start_grid, self.side_l) == [
                 {'position': [0, 8], 'possible': [9], 'dependencies': [[0, 7], [1, 6], [1, 7], [2, 6], [2, 7], [7, 8], [8, 8]]},
                 {'position': [1, 6], 'possible': [7], 'dependencies': [[0, 7], [0, 8], [1, 7], [2, 6], [2, 7]]},
@@ -253,9 +251,8 @@ class Test9x9Grid:
             ['6', '3', '4', '8', '7', '2', '5', 'f', 'e'],
             ['8', '1', '2', '6', '5', '9', '4', '3', 'k']
         ]
-        unknowns = sudoku.debug_start_grid(start_grid)
-        sorted_unknowns = sudoku.get_possible(unknowns, start_grid, self.side_l)
-        assert sudoku.solve_sudoku(sorted_unknowns, start_grid) == [
+        
+        assert sudoku.sudoku_solver(start_grid, self.side_l) == [
             ['4', '2', '3', '7', '1', '5', '8', '6', '9'],
             ['5', '8', '1', '9', '6', '4', '7', '2', '3'],
             ['7', '9', '6', '3', '2', '8', '1', '4', '5'],
@@ -280,9 +277,8 @@ class Test9x9Grid:
             ['x','8','7','y','1','9','z','3','5'],
             ['3','a','5','2','b','6','1','c','9']
         ]
-        unknowns = sudoku.debug_start_grid(start_grid)
-        sorted_unknowns = sudoku.get_possible(unknowns, start_grid, self.side_l)
-        assert sudoku.solve_sudoku(sorted_unknowns, start_grid) == [
+        
+        assert sudoku.sudoku_solver(start_grid, self.side_l) == [
             ['5','3','4','6','7','8','9','1','2'],
             ['6','7','2','1','9','5','3','4','8'],
             ['1','9','8','3','4','2','5','6','7'],

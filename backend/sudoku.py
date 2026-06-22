@@ -1,18 +1,16 @@
 import math
 import sudokuclass as sudokuclass
+from random import randint
 
 def main():
     solved = sudoku_solver()
     for row in solved:
         print(row)
+    # puzzle = sudoku_generator(9, 25)
+    # for row in puzzle:
+    #     print(row)
 
-def generate_sudoku(side_length=None):
-    if side_length is None:
-        side_l = 25
-    else:
-        side_l = side_length
 
-    
 
 def sudoku_solver(starting_grid=None, side_length=None):
     # start_grid, unknown_list, side_l = set_state_before_solve()
@@ -20,7 +18,7 @@ def sudoku_solver(starting_grid=None, side_length=None):
     #receives the starting grid formatted into an array (start_grid), and also receives the position of each unknown
     # start_grid, unknown_list = starting_grid(side_l)
 
-        
+    print(starting_grid)
     if starting_grid is not None:
         start_grid = starting_grid
     else:
@@ -59,12 +57,12 @@ def sudoku_solver(starting_grid=None, side_length=None):
         # ]
 
         # 
-        # grid = [
-        #     ['x', 'u', 't', '1'],
-        #     ['3', 'l', '4', 'd'],
-        #     ['1', 'c', 'v', '4'],
-        #     ['x', 'j', 'f', 'y']
-        # ]
+        start_grid = [
+            ['x', 'u', 't', '1'],
+            ['3', 'l', '4', 'd'],
+            ['1', 'c', 'v', '4'],
+            ['x', 'j', 'f', 'y']
+        ]
         # start_grid = [
         #     ['a', 'b', '3', '4', '5', 'l', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25'],
         #     ['6', '7', '8', '9', '10', 'm', 'i', 'n', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '1', '2', '3', '4', '5'],
@@ -142,42 +140,42 @@ def sudoku_solver(starting_grid=None, side_length=None):
         #     ['x','8','7','4','1','9','6','e','5'],
         #     ['t','a','5','2','8','6','1','7','9']
         # ]
-        start_grid = [
-            ['9', '12', '10', '18', '7', '17', '4', '14', 'w', 'g', 'j', 's', 'v', 't', 'h', 'n', '11', '24', '25', 'p', 'u', '2', '13', 'f', '3'],
-            ['8', '20', '22', '19', '6', 'p', 'n', '24', '25', '11', '3', 'u', '13', 'f', '2', 'i', 'l', 'm', 'q', '9', 'w', '4', 'g', '14', '17'],
-            ['17', '14', 'g', 'w', '4', 'j', 'h', 't', 's', 'v', 'p', '25', '11', '24', 'n', '2', '13', 'f', 'u', '3', 'q', 'i', 'l', 'm', '9'],
-            ['p', '24', '11', '25', 'n', '3', '2', 'f', 'u', '13', '9', 'q', 'l', 'm', 'i', '4', 'g', '14', 'w', '17', 's', 'h', 'v', 't', 'j'],
-            ['3', 'f', '13', 'u', '2', '9', 'i', 'm', 'q', 'l', '17', 'w', 'g', '14', '4', 'h', 'v', 't', 's', 'j', '25', 'n', '11', '24', 'p'],
-            ['q', 'h', 'j', 'm', 'l', 'w', 'g', 'n', '14', 'p', 's', 't', '3', '2', 'v', '11', '9', 'i', '24', '25', 'f', '13', '17', '4', 'u'],
-            ['u', '4', '17', 'f', '13', 'q', 'l', 'h', 'm', 'j', 'w', '14', 'p', 'n', 'g', 'v', '3', '2', 't', 's', '24', '11', '9', 'i', '25'],
-            ['s', '2', '3', 't', 'v', '25', '11', 'i', '24', '9', 'u', 'f', '17', '4', '13', 'l', 'j', 'h', 'm', 'q', '14', 'g', 'p', 'n', 'w'],
-            ['w', 'n', 'p', '14', 'g', 's', 'v', '2', 't', '3', '25', '24', '9', 'i', '11', '13', '17', '4', 'f', 'u', 'm', 'l', 'j', 'h', 'q'],
-            ['25', 'i', '9', '24', '11', 'u', '13', '4', 'f', '17', 'q', 'm', 'j', 'h', 'l', 'g', 'p', 'n', '14', 'w', 't', 'v', '3', '2', 's'],
-            ['2', '17', 'f', '13', 'u', 'i', 'q', 'j', 'l', 'm', '4', 'g', '14', 'p', 'w', 's', 't', '3', 'v', 'h', '11', '25', '24', '9', 'n'],
-            ['h', '3', 't', 'v', 's', 'n', '25', '9', '11', '24', '2', '13', 'f', '17', 'u', 'q', 'm', 'j', 'l', 'i', 'g', 'w', '14', 'p', '4'],
-            ['i', 'j', 'm', 'l', 'q', '4', 'w', 'p', 'g', '14', 'h', 'v', 't', '3', 's', '25', '24', '9', '11', 'n', '13', 'u', 'f', '17', '2'],
-            ['n', '9', '24', '11', '25', '2', 'u', '17', '13', 'f', 'i', 'l', 'm', 'j', 'q', 'w', '14', 'p', 'g', '4', 'v', 's', 't', '3', 'h'],
-            ['4', 'p', '14', 'g', 'w', 'h', 's', '3', 'v', 't', 'n', '11', '24', '9', '25', 'u', 'f', '17', '13', '2', 'l', 'q', 'm', 'j', 'i'],
-            ['14', '11', '25', 'n', 'p', 't', '3', '13', '2', 'u', '24', 'i', 'q', 'l', '9', '17', 'w', 'g', '4', 'f', 'h', 'j', 's', 'v', 'm'],
-            ['24', 'l', 'q', 'i', '9', 'f', '17', 'g', '4', 'w', 'm', 'h', 's', 'v', 'j', 'p', '25', '11', 'n', '14', '2', '3', 'u', '13', 't'],
-            ['m', 'v', 's', 'h', 'j', '14', 'p', '11', 'n', '25', 't', '2', 'u', '13', '3', '9', 'q', 'l', 'i', '24', '4', '17', 'w', 'g', 'f'],
-            ['f', 'g', 'w', '4', '17', 'm', 'j', 'v', 'h', 's', '14', 'n', '25', '11', 'p', '3', 'u', '13', '2', 't', 'i', '9', 'q', 'l', '24'],
-            ['t', '13', 'u', '2', '3', '24', '9', 'l', 'i', 'q', 'f', '4', 'w', 'g', '17', 'j', 's', 'v', 'h', 'm', 'n', 'p', '25', '11', '14'],
-            ['v', 'u', '2', '3', 't', '11', '24', 'q', '9', 'i', '13', '17', '4', 'w', 'f', 'm', 'h', 's', 'j', 'l', 'p', '14', 'n', '25', 'g'],
-            ['13', 'w', '4', '17', 'f', 'l', 'm', 's', 'j', 'h', 'g', 'p', 'n', '25', '14', 't', '2', 'u', '3', 'v', '9', '24', 'i', 'q', '11'],
-            ['g', '25', 'n', 'p', '14', 'v', 't', 'u', '3', '2', '11', '9', 'i', 'q', '24', 'f', '4', 'w', '17', '13', 'j', 'm', 'h', 's', 'l'],
-            ['l', 's', 'h', 'j', 'm', 'g', '14', '25', 'p', 'n', 'v', '3', '2', 'u', 't', '24', 'i', 'q', '9', '11', '17', 'f', '4', 'w', '13'],
-            ['11', 'q', 'i', '9', '24', '13', 'f', 'w', '17', '4', 'l', 'j', 'h', 's', 'm', '14', 'n', '25', 'p', 'g', '3', 't', '2', 'u', 'v']
-        ]
+        # start_grid = [
+        #     ['9', '12', '10', '18', '7', '17', '4', '14', 'w', 'g', 'j', 's', 'v', 't', 'h', 'n', '11', '24', '25', 'p', 'u', '2', '13', 'f', '3'],
+        #     ['8', '20', '22', '19', '6', 'p', 'n', '24', '25', '11', '3', 'u', '13', 'f', '2', 'i', 'l', 'm', 'q', '9', 'w', '4', 'g', '14', '17'],
+        #     ['17', '14', 'g', 'w', '4', 'j', 'h', 't', 's', 'v', 'p', '25', '11', '24', 'n', '2', '13', 'f', 'u', '3', 'q', 'i', 'l', 'm', '9'],
+        #     ['p', '24', '11', '25', 'n', '3', '2', 'f', 'u', '13', '9', 'q', 'l', 'm', 'i', '4', 'g', '14', 'w', '17', 's', 'h', 'v', 't', 'j'],
+        #     ['3', 'f', '13', 'u', '2', '9', 'i', 'm', 'q', 'l', '17', 'w', 'g', '14', '4', 'h', 'v', 't', 's', 'j', '25', 'n', '11', '24', 'p'],
+        #     ['q', 'h', 'j', 'm', 'l', 'w', 'g', 'n', '14', 'p', 's', 't', '3', '2', 'v', '11', '9', 'i', '24', '25', 'f', '13', '17', '4', 'u'],
+        #     ['u', '4', '17', 'f', '13', 'q', 'l', 'h', 'm', 'j', 'w', '14', 'p', 'n', 'g', 'v', '3', '2', 't', 's', '24', '11', '9', 'i', '25'],
+        #     ['s', '2', '3', 't', 'v', '25', '11', 'i', '24', '9', 'u', 'f', '17', '4', '13', 'l', 'j', 'h', 'm', 'q', '14', 'g', 'p', 'n', 'w'],
+        #     ['w', 'n', 'p', '14', 'g', 's', 'v', '2', 't', '3', '25', '24', '9', 'i', '11', '13', '17', '4', 'f', 'u', 'm', 'l', 'j', 'h', 'q'],
+        #     ['25', 'i', '9', '24', '11', 'u', '13', '4', 'f', '17', 'q', 'm', 'j', 'h', 'l', 'g', 'p', 'n', '14', 'w', 't', 'v', '3', '2', 's'],
+        #     ['2', '17', 'f', '13', 'u', 'i', 'q', 'j', 'l', 'm', '4', 'g', '14', 'p', 'w', 's', 't', '3', 'v', 'h', '11', '25', '24', '9', 'n'],
+        #     ['h', '3', 't', 'v', 's', 'n', '25', '9', '11', '24', '2', '13', 'f', '17', 'u', 'q', 'm', 'j', 'l', 'i', 'g', 'w', '14', 'p', '4'],
+        #     ['i', 'j', 'm', 'l', 'q', '4', 'w', 'p', 'g', '14', 'h', 'v', 't', '3', 's', '25', '24', '9', '11', 'n', '13', 'u', 'f', '17', '2'],
+        #     ['n', '9', '24', '11', '25', '2', 'u', '17', '13', 'f', 'i', 'l', 'm', 'j', 'q', 'w', '14', 'p', 'g', '4', 'v', 's', 't', '3', 'h'],
+        #     ['4', 'p', '14', 'g', 'w', 'h', 's', '3', 'v', 't', 'n', '11', '24', '9', '25', 'u', 'f', '17', '13', '2', 'l', 'q', 'm', 'j', 'i'],
+        #     ['14', '11', '25', 'n', 'p', 't', '3', '13', '2', 'u', '24', 'i', 'q', 'l', '9', '17', 'w', 'g', '4', 'f', 'h', 'j', 's', 'v', 'm'],
+        #     ['24', 'l', 'q', 'i', '9', 'f', '17', 'g', '4', 'w', 'm', 'h', 's', 'v', 'j', 'p', '25', '11', 'n', '14', '2', '3', 'u', '13', 't'],
+        #     ['m', 'v', 's', 'h', 'j', '14', 'p', '11', 'n', '25', 't', '2', 'u', '13', '3', '9', 'q', 'l', 'i', '24', '4', '17', 'w', 'g', 'f'],
+        #     ['f', 'g', 'w', '4', '17', 'm', 'j', 'v', 'h', 's', '14', 'n', '25', '11', 'p', '3', 'u', '13', '2', 't', 'i', '9', 'q', 'l', '24'],
+        #     ['t', '13', 'u', '2', '3', '24', '9', 'l', 'i', 'q', 'f', '4', 'w', 'g', '17', 'j', 's', 'v', 'h', 'm', 'n', 'p', '25', '11', '14'],
+        #     ['v', 'u', '2', '3', 't', '11', '24', 'q', '9', 'i', '13', '17', '4', 'w', 'f', 'm', 'h', 's', 'j', 'l', 'p', '14', 'n', '25', 'g'],
+        #     ['13', 'w', '4', '17', 'f', 'l', 'm', 's', 'j', 'h', 'g', 'p', 'n', '25', '14', 't', '2', 'u', '3', 'v', '9', '24', 'i', 'q', '11'],
+        #     ['g', '25', 'n', 'p', '14', 'v', 't', 'u', '3', '2', '11', '9', 'i', 'q', '24', 'f', '4', 'w', '17', '13', 'j', 'm', 'h', 's', 'l'],
+        #     ['l', 's', 'h', 'j', 'm', 'g', '14', '25', 'p', 'n', 'v', '3', '2', 'u', 't', '24', 'i', 'q', '9', '11', '17', 'f', '4', 'w', '13'],
+        #     ['11', 'q', 'i', '9', '24', '13', 'f', 'w', '17', '4', 'l', 'j', 'h', 's', 'm', '14', 'n', '25', 'p', 'g', '3', 't', '2', 'u', 'v']
+        # ]
 
-    unknown_list = debug_start_grid(start_grid)
+    unknown_list = start_unknowns(start_grid)
     if len(unknown_list) == 0:
         return start_grid
     
     if side_length is not None:
         side_l = side_length
     else:
-        side_l = 25
+        side_l = 4
     #for each unknown, it takes out the values that are already in its row/column/box
     sorted_unknowns = get_possible(unknown_list, start_grid, side_l)
     print("sorted unknowns")
@@ -187,49 +185,16 @@ def sudoku_solver(starting_grid=None, side_length=None):
     # print(sorted_unknowns)
     solved = solve_sudoku(sorted_unknowns, start_grid)
     return solved
-
-
-def starting_grid(l):
-    grid = []
-    unknown = []
-    print("Input the rows of the grid, separating each number with a space. Use letters for unknowns.")
-    #iterates through each number, so each row out of the total
-    for i in range(l):
-        while True:
-            input_row = input("Input row: ").split(" ")
-            if len(input_row) == l:
-                
-                for index, inputs in enumerate(input_row):
-                    if inputs.isalpha():
-                        #appends positions of all unknowns to unknownlist, starting from index a to prevent duplicate letters
-                        unknown.append([i,input_row.index(inputs, index)])
-                    if not inputs.isalnum:
-                        break
-                break
-            else:
-                print("Row is not equivalent to side length")
-    #puts row in list, to form the starting grid
-        grid.append(input_row)
-    return grid, unknown
-
-def set_state_before_solve():
-    while True:
-        try:
-            #get side length, until enters a valid value
-            side_l = int(input("Side length: "))
-            break
-        except ValueError:
-            pass
-    grid, unknowns = starting_grid(side_l)
-    return grid, unknowns, side_l
     
 
-def debug_start_grid(grid):
+def start_unknowns(grid):
+    print("within function")
+    print(grid)
     unknown = []
     for index, row in enumerate(grid):
-
+        print(row)
         for idx, item in enumerate(row):
-            if item.isalpha():
+            if item == '':
                 #appends positions of all unknowns to unknownlist, starting from index a to prevent duplicate letters
                 unknown.append([index,row.index(item, idx)])
     return unknown
@@ -362,8 +327,6 @@ def generate_layer(start_stack):
                         # if current_unknown["position"] == [0,0] or current_unknown["position"] == [0,6]:
                         
                     except:
-                        # if current_unknown["position"] == [0,0] or current_unknown["position"] == [0,6]:
-                        
                         pass
         current_unknown["possible"].remove(value)
         # if current_unknown["position"] == [0,0] or current_unknown["position"] == [0,6]:
@@ -403,7 +366,6 @@ def stack_to_fill(start_stack, grid):
 
 def solve_sudoku(sorted_unknowns, grid):
     start_stack = sudokuclass.GameState()   
-    print(start_stack)
     start_stack.push(next_array=sorted_unknowns)
     
     end_stack = generate_layer(start_stack)
@@ -416,6 +378,93 @@ def solve_sudoku(sorted_unknowns, grid):
     solved = stack_to_fill(end_stack, grid)
     return solved
 
+def sudoku_generator(side_l, unknown_number):
+    grid = empty_grid_generator(side_length=side_l)
+    unknowns = start_unknowns(grid)
+    print(unknowns)
+    sorted_unknowns = get_possible(unknowns, grid, side_l)
+    print("this is unknowns")
+    print(sorted_unknowns)
+    start_grid = generate_sudoku(sorted_unknowns, unknown_number, grid)
+    return start_grid
+
+def empty_grid_generator(side_length=None):
+    print(side_length)
+    if side_length is None:
+        side_len = 25
+    else:
+        side_len = side_length
+
+    grid = []
+    for i in range(side_len):
+        grid.append([])
+        for _ in range(side_len):
+            grid[i].append('a')
+    print(grid)
+    return grid
+
+def generate_sudoku(unknowns, unknown_num, grid):
+    new_stack = sudokuclass.GameState()
+    new_stack.push(next_array=unknowns)
+    end_stack = generate_puzzle_layer(new_stack, unknown_num)
+    solved = stack_to_fill(end_stack, grid)
+    return solved
+
+def generate_puzzle_layer(start_stack, unknown_number):
+    top = start_stack.top
+    sorted_list = top.next_array
+    
+    while len(sorted_list) > unknown_number:
+        print("iterated")
+        top = start_stack.top
+        sorted_list = top.next_array
+        
+        if len(sorted_list) == unknown_number:
+            return start_stack
+        rand_remove = randint(0, len(sorted_list)-1)
+        print(rand_remove)
+        current_unknown = sorted_list[rand_remove]
+        sorted_list[rand_remove] = sorted_list[0]
+        sorted_list[0] = current_unknown
+        
+        
+        while len(current_unknown["possible"]) == 0:
+            start_stack.pop()
+            top_node = start_stack.top
+            current_unknown = top_node.next_array[0]
+            sorted_list = top_node.next_array
+            
+        
+        possible_list = []
+        for grid in sorted_list[1:]:
+            possible_list.append(
+                {
+                    "position": grid["position"][:],
+                    "possible": grid["possible"][:],
+                    "dependencies": grid["dependencies"][:]
+                }
+            )
+        
+        #remove dependencies
+        rand = randint(0, len(current_unknown["possible"]) - 1)
+        value = current_unknown["possible"][rand]
+        for dependency in current_unknown["dependencies"]:
+            # if current_unknown["position"] == [0,0] or current_unknown["position"] == [0,6]:
+                
+            
+            for possible in possible_list:
+                
+                if possible["position"] == dependency:
+                    try:
+                        possible["possible"].remove(value)
+                    except:
+                        pass
+        current_unknown["possible"].remove(value)
+        
+        possible_list.sort(key=lambda x: len(x["possible"]))
+        start_stack.push(value=value, position=current_unknown["position"], next_array=possible_list)
+    
+    
 if __name__ == "__main__":    
     main()
 
