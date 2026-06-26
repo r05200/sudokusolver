@@ -405,6 +405,47 @@ class Test25x25Grid:
 ['23', '18', '7', '22', '12', '15', '14', '25', '1', '21', '8', '3', '2', '16', '20', '24', '10', '5', '9', '11', '17', '19', '4', '6', '13'],
 ['11', '19', '20', '9', '24', '13', '16', '6', '17', '4', '12', '23', '10', '15', '5', '14', '18', '25', '8', '7', '3', '22', '2', '21', '1']
 ]
+        
+
+class TestBoardGridConversion:
+    def test_board_to_string(self):
+        board = [
+            ['2', '4', '3', '1'],
+            ['3', '1', '4', '2'],
+            ['1', '3', '2', '4'],
+            ['4', '2', '1', '3']
+        ]
+        assert sudoku.board_str_converter(board) == "2431314213244213"
+
+    def test_board_to_string2(self):
+        board = [
+            ['a', 'a', 'a', 'a'],
+            ['4', 'a', 'a', 'a'],
+            ['a', '1', '4', '3'],
+            ['3', '4', 'a', 'a']
+        ]
+        assert sudoku.board_str_converter(board) == "aaaa4aaaa14334aa"
+
+    def test_string_to_board(self):
+        string = '2431314213244213'
+       
+        assert sudoku.board_str_converter(string) == [
+            ['2', '4', '3', '1'],
+            ['3', '1', '4', '2'],
+            ['1', '3', '2', '4'],
+            ['4', '2', '1', '3']
+        ]
+    
+    def test_string_to_board2(self):
+        string = '24a1aa421aaa4213'
+       
+        assert sudoku.board_str_converter(string) == [
+            ['2', '4', 'a', '1'],
+            ['a', 'a', '4', '2'],
+            ['1', 'a', 'a', 'a'],
+            ['4', '2', '1', '3']
+        ]
+
 # class Test49x49Grid:
 #     side_l = 49
 #     def test_solve_sudoku49x49(self):

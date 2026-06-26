@@ -194,7 +194,7 @@ def start_unknowns(grid):
     for index, row in enumerate(grid):
         print(row)
         for idx, item in enumerate(row):
-            if item == '':
+            if item.isalpha():
                 #appends positions of all unknowns to unknownlist, starting from index a to prevent duplicate letters
                 unknown.append([index,row.index(item, idx)])
     return unknown
@@ -464,7 +464,30 @@ def generate_puzzle_layer(start_stack, unknown_number):
         possible_list.sort(key=lambda x: len(x["possible"]))
         start_stack.push(value=value, position=current_unknown["position"], next_array=possible_list)
     
-    
+
+def board_str_converter(input):
+    if isinstance(input, str):
+        grid = []
+        index = -1
+        for pos, i in enumerate(input):
+            idx = pos % math.sqrt(len(input))
+            print("idx:", idx)
+            if idx == 0:
+                print("here")
+                index += 1
+                grid.append([])
+            grid[index].append(i)
+        print(grid)
+        return grid
+    elif isinstance(input, list):
+        string = ""
+        for index in input:
+            for idx in index:
+                string += idx
+        return string
+    else:
+        raise TypeError("input is not right type")
+
 if __name__ == "__main__":    
     main()
 

@@ -1,19 +1,19 @@
 from fastapi import APIRouter, Body
 from pydantic import BaseModel
 from typing import List
-from sudoku import sudoku_solver, sudoku_generator
+from sudoku import sudoku_solver, sudoku_generator, board_str_converter
 
 
 router = APIRouter()
 
-class BoardRequest(BaseModel):
-    board: List[list[str]]
 
-@router.post('/solve_sudoku', response_model=BoardRequest)
-def solve_sudoku(board: BoardRequest, side_l: int = Body()):
+
+@router.post('/solve_sudoku', response_model=str)
+def solve_sudoku(board: str, side_l: int):
     print("here")
+    board_str = board_str_converter(board)
     solved = sudoku_solver(starting_grid=board.board, side_length=side_l)
-    solved = BoardRequest(board=solved)
+    board_str = board_str_converter(solved)
 
     return solved
 
